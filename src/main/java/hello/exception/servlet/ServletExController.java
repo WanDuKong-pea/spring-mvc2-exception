@@ -18,7 +18,6 @@ public class ServletExController {
 
     /**
      * 1.Exception(예외)
-     * tomcat이 기본으로 제공하는 오류 화면을 볼 수 있음
      * HTTP Status 500 - Internal Server Error
      */
     @GetMapping("/error-ex")
@@ -29,7 +28,7 @@ public class ServletExController {
     /**
      * 2. response.sendError(HTTP 상태코드, 오류 메시지)
      * 서블릿 컨테이너가 응답 전에 response에 sendError()가 호출되었는지 확인
-     * 호출되었다면 설정한 오류 코드에 맞추어 기본 오류 페이지를 보임
+     * 호출되었다면 설정한 오류 코드에 맞추어 오류 페이지를 보임
      */
     @GetMapping("/error-404")
     public void error404(HttpServletResponse response) throws IOException{
@@ -39,7 +38,17 @@ public class ServletExController {
     /**
      * 2. response.sendError(HTTP 상태코드, 오류 메시지)
      * 서블릿 컨테이너가 응답 전에 response에 sendError()가 호출되었는지 확인
-     * 호출되었다면 설정한 오류 코드에 맞추어 기본 오류 페이지를 보임
+     * 호출되었다면 설정한 오류 코드에 맞추어 오류 페이지를 보임
+     */
+    @GetMapping("/error-400")
+    public void error400(HttpServletResponse response) throws IOException{
+        response.sendError(400);
+    }
+
+    /**
+     * 2. response.sendError(HTTP 상태코드, 오류 메시지)
+     * 서블릿 컨테이너가 응답 전에 response에 sendError()가 호출되었는지 확인
+     * 호출되었다면 설정한 오류 코드에 맞추어 오류 페이지를 보임
      */
     @GetMapping("/error-500")
     public void error500(HttpServletResponse response) throws IOException{
