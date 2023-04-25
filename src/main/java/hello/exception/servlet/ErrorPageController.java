@@ -3,7 +3,6 @@ package hello.exception.servlet;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.util.NestedServletException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -56,7 +55,13 @@ public class ErrorPageController {
         log.info("ERROR_REQUEST_URI: {}",request.getAttribute(ERROR_REQUEST_URI));
         log.info("ERROR_SERVLET_NAME: {}", request.getAttribute(ERROR_SERVLET_NAME));
         log.info("ERROR_STATUS_CODE: {}", request.getAttribute(ERROR_STATUS_CODE));
-        log.info("dispatchType={}", request.getDispatcherType());
+
+        //[서블릿 예외처리_필터, 인터셉터: SpringMVC2_login에서 추가 커밋 확인하기]
+        //DispatcherType: 필터나 인터셉터에서 검증 체크를 진행할 때 WAS가 예외처리 페이지 처리를 위해 재요청하는 요청이라도
+        // 필터,인터셉터가 다시 중복으로 검증 체크를 진행하지 않도록 DispatcherType을 이용할 수 있음
+        //request.getDispatcherType = ERROR: exception으로 인한 예외 처리 페이지 재요청 시
+        //request.getDispatcherType = REQUEST: 정상 요청일 시
+        log.info("dispatchType={}",request.getDispatcherType());
     }
 
 }
