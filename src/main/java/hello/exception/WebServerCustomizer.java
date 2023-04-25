@@ -8,8 +8,12 @@ import org.springframework.stereotype.Component;
 
 /**
  * 서블릿 오류 페이지를 등록하는 방법
- * [전반적인 이번 강의 흐름]
+ * [오류 페이지 처리 흐름]
  * ex) ServletExController(/error-500) 500 예외 발생-> errorPage500() -> ErrorPageController(/error-page/500) -> view(templates/error-page/500)
+ *
+ * [예외 발생과 오류 페이지 요청 흐름]
+ * 예외가 발생해서 WAS까지 전파되면 WAS는 오류 페이지(ErrorPage) 경로를 찾아 내부에서 오류 페이지를 호출
+ * 이때 오류 페이지 경로로 필터, 서블릿, 인터셉터, 컨트롤러가 모두 다시 호출됨
  */
 @Component
 public class WebServerCustomizer implements WebServerFactoryCustomizer<ConfigurableWebServerFactory> {
