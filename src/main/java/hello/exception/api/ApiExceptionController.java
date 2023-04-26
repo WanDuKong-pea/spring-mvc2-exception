@@ -19,6 +19,15 @@ public class ApiExceptionController {
         if (id.equals("ex")) {
             throw new RuntimeException("잘못된 사용자");
         }
+
+        //HandlerExceptionResolver 강의에서 사용할 오류 값
+        //PostMan 실행 시 500 에러 처리됨
+        //기대하는 것: WAS까지 예외가 넘어가더라도 500 에러 코드(default)가 아닌
+                    //예외에 따라 다른 상태코드로 처리
+        if(id.equals("bad")){
+            throw new IllegalArgumentException("잘못된 입력 값");
+        }
+
         return new MemberDto(id, "hello " + id);
     }
 
