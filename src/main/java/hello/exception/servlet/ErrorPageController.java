@@ -1,11 +1,17 @@
 package hello.exception.servlet;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * error 발생(ServletExController) 시 WebServerCustomizer에서 등록한 errorPage path와
@@ -62,6 +68,33 @@ public class ErrorPageController {
         //request.getDispatcherType = ERROR: exception으로 인한 예외 처리 페이지 재요청 시
         //request.getDispatcherType = REQUEST: 정상 요청일 시
         log.info("dispatchType={}",request.getDispatcherType());
+    }
+
+    /**
+     * API 예외 처리 "JSON"으로 응답하기
+     */            //produces -> HTTP Header의 Accept 값이 application/json 일때 이 메서드 호출
+    @RequestMapping(value ="/error-page/500", produces= MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Map<String,Object>> errorPage500Api(HttpServletRequest request,
+                                                              HttpServletResponse response){
+        log.info("API errorPage 500");
+
+        //jackson 라이브러리는 Map을 JSON 구조로 변환 가능
+        Map<String,Object> result = new HashMap<>();
+
+        Exception ex = (Exception) request.getAttribute(ERROR_EXCEPTION);
+
+        result.put("status",request.getAttribute(ERROR_STATUS_CODE));
+        result.put("message",ex.getMessage());
+
+        Integer statusCode = (Integer) request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE); //?
+
+        //ResponseEntity를 사용하여 응답하기 때문에 메시지 컨버터가 동작 -> 클라이언트에 JSON 반환
+        //public ResponseEntity(@Nullable T body, HttpStatus status)
+        return new ResponseEntity(result, HttpStatus.valueOf(statusCode));
+
+        //[PostMan을 통해 다시 테스트 해보기]
+        //http://localhot:8080/api/members/ex
+        //Accept: application/json 과 아닌 것 둘다 확인 해보기
     }
 
 }
