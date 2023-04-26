@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -69,5 +70,20 @@ public class ApiExceptionController {
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "error.bad",
                 new IllegalArgumentException());
     }
+
+    //스프링 부트 제공 ExceptionResolver 강의에서 사용할 예외 발생 값
+    //DefaultHandlerExceptionResolver : 스프링 내부 발생 스프링 예외 해결
+    //sendError로 문제를 해결 WAS까지 예외를 보냄 -> BasicExceptionController 제공 오류 페이지, json
+    @GetMapping("/api/default-handler-ex")
+    public String defaultException(@RequestParam Integer data) {
+        //대표적인 내부 발생 스프링 예외 -> TypeMismatchException
+        //DefaultHandlerExceptionResolver는
+        //TypeMismatchException이 발생했을 때 500에러가 나지 않고 400에러로 변경함
+
+        //http://localhost:8080/api/default-handler-ex?data=hello&message=
+        //Integer data 에 문자를 입력하면 내부에서 TypeMismatchException 이 발생
+        return "ok";
+    }
+
 }
 
