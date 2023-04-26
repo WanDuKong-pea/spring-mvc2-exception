@@ -73,7 +73,7 @@ public class ApiExceptionController {
 
     //스프링 부트 제공 ExceptionResolver 강의에서 사용할 예외 발생 값
     //DefaultHandlerExceptionResolver : 스프링 내부 발생 스프링 예외 해결
-    //sendError로 문제를 해결 WAS까지 예외를 보냄 -> BasicExceptionController 제공 오류 페이지, json
+    //sendError로 문제를 해결 WAS까지 예외를 보냄 -> BasicErrorController 제공 오류 페이지, json
     @GetMapping("/api/default-handler-ex")
     public String defaultException(@RequestParam Integer data) {
         //대표적인 내부 발생 스프링 예외 -> TypeMismatchException
