@@ -1,5 +1,6 @@
 package hello.exception.api;
 
+import hello.exception.exception.UserException;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +27,13 @@ public class ApiExceptionController {
                     //예외에 따라 다른 상태코드로 처리
         if(id.equals("bad")){
             throw new IllegalArgumentException("잘못된 입력 값");
+        }
+
+        //HandlerExceptionResolver 강의에서 사용할 예외 발생 값
+        //기대하는 것: WAS까지 예외가 넘어가서 처리되지 않고,
+                    //ExceptionResolver에서 예외처리가 끝나는 것.
+        if(id.equals("user-ex")){
+            throw new UserException("사용자 오류");
         }
 
         return new MemberDto(id, "hello " + id);
