@@ -86,7 +86,9 @@ public class ErrorPageController {
         result.put("status",request.getAttribute(ERROR_STATUS_CODE));
         result.put("message",ex.getMessage());
 
-        Integer statusCode = (Integer) request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE); //?
+        //Integer statusCode = (Integer) request.getAttribute(ERROR_STATUS_CODE);
+        //RequestDispatcher에 상수로 정의되어 있음을 보여주기 위한 코드였음
+        Integer statusCode = (Integer) request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
 
         //ResponseEntity를 사용하여 응답하기 때문에 메시지 컨버터가 동작 -> 클라이언트에 JSON 반환
         //public ResponseEntity(@Nullable T body, HttpStatus status)

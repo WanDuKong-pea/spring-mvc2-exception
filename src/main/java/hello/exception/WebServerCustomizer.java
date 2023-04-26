@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
  * 예외가 발생해서 WAS까지 전파되면 WAS는 오류 페이지(ErrorPage) 경로를 찾아 내부에서 오류 페이지를 호출
  * 이때 오류 페이지 경로로 필터, 서블릿, 인터셉터, 컨트롤러가 모두 다시 호출됨
  */
-@Component //API 예외 처리에서 다시 Servlet 오류처리를 사용하기 위해 주석 풀었음
+//@Component //API 예외 처리에서 스프링 부트 제공 BasicErrorController를 사용하기 위해 주석
 public class WebServerCustomizer implements WebServerFactoryCustomizer<ConfigurableWebServerFactory> {
     /**
      * 앞서 ServletExController 에서 설정한 예외들로 오류 페이지 처리 예시를 작성했음
